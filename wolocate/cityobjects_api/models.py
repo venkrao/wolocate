@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from .utils import UploadToPathAndRename
 
 
 # Create your models here.
@@ -9,7 +9,7 @@ class CityObject(models.Model):
     city = models.CharField(max_length=64)
     object_type = models.ForeignKey('CityObjectType', on_delete=models.CASCADE)
     postal_code = models.IntegerField()
-    object_photo = models.ForeignKey('CityObjectPhoto', on_delete=models.CASCADE)
+    city_object_photo = models.ForeignKey('CityObjectPhoto', on_delete=models.CASCADE)
 
 
 class CityObjectType(models.Model):
@@ -17,12 +17,12 @@ class CityObjectType(models.Model):
 
 
 class CityObjectPhoto(models.Model):
-    object_type = models.CharField(max_length=64)
     upload_date = models.DateTimeField(auto_now_add=True)
-    image_path = models.CharField(max_length=128)
-    contributing_user = models.ForeignKey('CityObjectsUser', on_delete=models.CASCADE)
+    image_path = models.ImageField(upload_to=UploadToPathAndRename(""), max_length=124)
+    contributing_user = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
     approved = models.BooleanField(default=False)
 
 
-class CityObjectsUser(models.Model):
+class UserProfile(models.Model):
     email_sha256 = models.CharField(max_length=64)
+

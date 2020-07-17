@@ -20,6 +20,11 @@ from rest_framework import routers
 
 from wolocate.cityobjects_api.views import *
 
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
@@ -27,8 +32,14 @@ urlpatterns = [
 router = routers.DefaultRouter()
 router.register(r'cityobject', CityObjectsView)
 router.register(r'cityobjecttype', CityObjectTypeView)
+router.register(r'userprofile', UserProfileView)
+router.register(r'cityobjectphoto', CityObjectPhotoView)
 
+from .settings import *
 
 urlpatterns += [
     path('', include(router.urls))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)

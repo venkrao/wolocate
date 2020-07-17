@@ -12,3 +12,12 @@ class CityObjectTypeView(viewsets.ModelViewSet):
     queryset = CityObjectType.objects.all()
     serializer_class = CityObjectTypeSerializer
 
+
+class UserProfileView(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+
+
+class CityObjectPhotoView(viewsets.ModelViewSet):
+    queryset = CityObjectPhoto.objects.all()
+    serializer_class = CityObjectPhotoSerializer
